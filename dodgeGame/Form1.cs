@@ -95,21 +95,22 @@ namespace dodgeGame
                 hero.Y += heroSpeed;
             }
 
-            if (leftDown == true && hero.Y > 0)
+            if (leftDown == true && hero.X > 0)
             {
-                hero.Y -= heroSpeed;
+                hero.X -= heroSpeed;
             }
 
             if (rightDown == true && hero.Y < this.Width - hero.Width)
             {
-                hero.Y += heroSpeed;
+                hero.X += heroSpeed;
             }
 
+            Refresh();
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(violetBrush, )
+            e.Graphics.FillRectangle(violetBrush, hero);
         }
     }
 }
