@@ -77,12 +77,39 @@ namespace dodgeGame
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+            //counterR++;
+            //if (counterR == 5)
+            //{
+            //    obsticles.Add(new Rectangle(100, 0, 10, 50));
+            //    counter = 0;
+            //}
+
+            //move player 1 
+            if (upDown == true && hero.Y > 0)
+            {
+                hero.Y -= heroSpeed;
+            }
+
+            if (downDown == true && hero.Y < this.Height - hero.Height)
+            {
+                hero.Y += heroSpeed;
+            }
+
+            if (leftDown == true && hero.Y > 0)
+            {
+                hero.Y -= heroSpeed;
+            }
+
+            if (rightDown == true && hero.Y < this.Width - hero.Width)
+            {
+                hero.Y += heroSpeed;
+            }
 
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-
+            e.Graphics.FillRectangle(violetBrush, )
         }
     }
 }
