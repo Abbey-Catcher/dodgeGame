@@ -12,11 +12,11 @@ namespace dodgeGame
 {
     public partial class Form1 : Form
     {
-        Rectangle hero = new Rectangle(0, 200, 15, 15);
+        Rectangle hero = new Rectangle(0, 170, 15, 15);
 
         int heroSpeed = 5;
         int obstacleLeftSpeed = 8;
-        int obstacleRighttSpeed = 8;
+        int obstacleRightSpeed = -8;
 
         List<Rectangle> obstacleLeft = new List<Rectangle>();
         List<Rectangle> obstacleRight = new List<Rectangle>();
@@ -29,12 +29,23 @@ namespace dodgeGame
         SolidBrush violetBrush = new SolidBrush(Color.Violet);
         SolidBrush blueBrush = new SolidBrush(Color.SkyBlue);
 
-        int counterL = 0;
-        int counterR = 0;
+        int counter = 0;
+        string gameState = "waiting";
 
         public Form1()
         {
             InitializeComponent();
+        }
+
+        public void GameInitialize()
+        {
+            gameTimer.Enabled = true;
+            gameState = "running";
+            obstacleLeft.Clear();
+            obstacleRight.Clear();
+
+            hero.X = this.Width / 2 - hero.Width / 2;
+            hero.Y = this.Height - groundHeight - hero.Height;
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -77,14 +88,7 @@ namespace dodgeGame
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-            //counterR++;
-            //if (counterR == 5)
-            //{
-            //    obsticles.Add(new Rectangle(100, 0, 10, 50));
-            //    counter = 0;
-            //}
-
-            //move player 1 
+            //move player
             if (upDown == true && hero.Y > 0)
             {
                 hero.Y -= heroSpeed;
@@ -105,12 +109,59 @@ namespace dodgeGame
                 hero.X += heroSpeed;
             }
 
+            for (int i = 0; i < obstacleLeft.Count; i++)
+            {
+                int y = obstacleLeft[i].Y + obstacleLeftSpeed;
+
+                obstacleLeft[i] = new Rectangle(obstacleLeft[i].X, y, 10, 50);
+            }
+
+            for (int i = 0; i < obstacleRight.Count; i++)
+            {
+                int y = obstacleRight[i].Y + obstacleRightSpeed;
+
+                obstacleRight[i] = new Rectangle(obstacleRight[i].X, y, 10, 50);
+            }
+
+            counter++;
+            if (counter == 15)
+            {
+                obstacleLeft.Add(new Rectangle(150, 0, 10, 50));
+                obstacleRight.Add(new Rectangle(400, this.Width, 10, 50));
+                counter = 0;
+            }
+
+            for (int i = 0; i < obstacleLeft.Count; i++)
+            {
+                if (hero.IntersectsWith(obstacleLeft[i]))
+                {
+                    gameTimer.Enabled = false;
+                }
+            }
+
+            for (int i = 0; i < obstacleRight.Count; i++)
+            {
+                if (hero.IntersectsWith(obstacleRight[i]))
+                {
+                    gameTimer.Enabled = false;
+                }
+            }
+
             Refresh();
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(violetBrush, hero);
+            if (gameState == "running")
+            {
+                e.Graphics.FillRectangle(violetBrush, hero);
+            }
+
+            for (int i = 0; i < obstacleLeft.Count(); i++)
+            {
+                e.Graphics.FillRectangle(blueBrush, obstacleLeft[i]);
+                e.Graphics.FillRectangle(blueBrush, obstacleRight[i]);
+            }
         }
     }
 }
