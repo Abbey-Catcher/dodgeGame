@@ -109,6 +109,7 @@ namespace dodgeGame
                 hero.X += heroSpeed;
             }
 
+            //new y
             for (int i = 0; i < obstacleLeft.Count; i++)
             {
                 int y = obstacleLeft[i].Y + obstacleLeftSpeed;
@@ -116,6 +117,7 @@ namespace dodgeGame
                 obstacleLeft[i] = new Rectangle(obstacleLeft[i].X, y, 10, 50);
             }
 
+            //new y
             for (int i = 0; i < obstacleRight.Count; i++)
             {
                 int y = obstacleRight[i].Y + obstacleRightSpeed;
@@ -123,6 +125,7 @@ namespace dodgeGame
                 obstacleRight[i] = new Rectangle(obstacleRight[i].X, y, 10, 50);
             }
 
+            //add new
             counter++;
             if (counter == 15)
             {
@@ -131,6 +134,7 @@ namespace dodgeGame
                 counter = 0;
             }
 
+            //hero interacts, end
             for (int i = 0; i < obstacleLeft.Count; i++)
             {
                 if (hero.IntersectsWith(obstacleLeft[i]))
@@ -139,6 +143,7 @@ namespace dodgeGame
                 }
             }
 
+            //hero interacts, end
             for (int i = 0; i < obstacleRight.Count; i++)
             {
                 if (hero.IntersectsWith(obstacleRight[i]))
