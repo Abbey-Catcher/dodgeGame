@@ -45,7 +45,7 @@ namespace dodgeGame
             obstacleRight.Clear();
 
             hero.X = this.Width / 2 - hero.Width / 2;
-            hero.Y = this.Height - groundHeight - hero.Height;
+            hero.Y = this.Height -  hero.Height;
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
